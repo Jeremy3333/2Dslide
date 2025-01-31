@@ -11,6 +11,7 @@ class Vector3d {
 public:
     Vector3d();
     Vector3d(double p_x, double p_y, double p_z);
+    Vector3d(const Vector3d& other);
     double x, y, z;
 };
 

@@ -16,9 +16,20 @@ add_executable(Blobux main.cpp
         src/Utils/Utils.hpp
         src/Model/Model.cpp
         src/Model/Model.hpp
-        src/Utils/Vector3d.cpp
-        src/Utils/Vector3d.hpp
+        src/Utils/Object3D/Vector3d.cpp
+        src/Utils/Object3D/Vector3d.hpp
         src/Model/Player.cpp
-        src/Model/Player.hpp)
+        src/Model/Player.hpp
+        src/Utils/Object3D/Object3D.cpp
+        src/Utils/Object3D/Object3D.hpp
+        src/Utils/Object3D/Cube.cpp
+        src/Utils/Object3D/Cube.hpp
+        src/Utils/Object2D/Object2D.cpp
+        src/Utils/Object2D/Object2D.hpp
+        src/Utils/Object2D/Vector2d.cpp
+        src/Utils/Object2D/Vector2d.hpp
+        src/Utils/Object2D/Rectangle.cpp
+        src/Utils/Object2D/Rectangle.hpp
+        src/Utils/Utils.cpp)
 
 target_link_libraries(Blobux ${SDL2_LIBRARIES})

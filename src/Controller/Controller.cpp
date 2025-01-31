@@ -27,6 +27,10 @@ double Controller::getPlayerDirection() const {
     return model_.getPlayerDirection();
 }
 
+const std::vector<std::unique_ptr<Object3D>>& Controller::getObjects() const{
+    return model_.getObjects();
+}
+
 void Controller::rotatePlayer(const double delta) {
     model_.rotatePlayer(delta);
 }

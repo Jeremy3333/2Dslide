@@ -5,7 +5,11 @@
 #ifndef VIEW_HPP
 #define VIEW_HPP
 
+#include <memory>
 #include <SDL2/SDL.h>
+
+#include "Utils/Object2D/Object2D.hpp"
+#include "Utils/Object2D/Rectangle.hpp"
 
 // define class Controller to avoid circular dependency
 class Controller;
@@ -30,6 +34,9 @@ private:
     void clear() const;
 
     void drawCompas(double dir) const;
+
+    void drawObject2D(std::unique_ptr<Object2D> object) const;
+    void drawRectangle(const Rectangle& rectangle) const;
 
     void drawCircle(int x, int y, int radius) const;
 };

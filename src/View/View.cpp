@@ -59,7 +59,11 @@ void View::input() const {
 void View::draw() const {
     clear();
     const double dir = controller_.getPlayerDirection();
+    const Vector3d playerPos = controller_.getPlayerPosition();
     drawCompas(dir);
+    for (const auto& object : controller_.getObjects()) {
+        drawObject2D(object->getCut(dir, Vector2d(playerPos.x, playerPos.z)));
+    }
     SDL_RenderPresent(renderer_);
 }
 
@@ -72,7 +76,7 @@ void View::waitFrame() {
 }
 
 void View::clear() const {
-    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 255);
     SDL_RenderClear(renderer_);
 }
 
@@ -82,6 +86,27 @@ void View::drawCompas(const double dir) const {
     SDL_SetRenderDrawColor(renderer_, 255, 0, 0, 255);
     SDL_RenderDrawLine(renderer_, windowWidth_ - 60, 60, static_cast<int>(windowWidth_ - 60 + 50 * cos(dir)), static_cast<int>(60 + 50 * sin(dir)));
 }
+
+void View::drawObject2D(std::unique_ptr<Object2D> object) const {
+    if (dynamic_cast<Rectangle*>(object.get())) {
+        drawRectangle(*dynamic_cast<Rectangle*>(object.get()));
+        return;
+    }
+    std::cerr << "Unknown object type" << std::endl;
+}
+
+void View::drawRectangle(const Rectangle& rectangle) const {
+    SDL_Rect rect;
+    rect.x = static_cast<int>(rectangle.getPosition().x) + windowWidth_ / 2;
+    rect.y = static_cast<int>(rectangle.getPosition().y) + windowHeight_ / 2;
+    rect.w = static_cast<int>(rectangle.getWidth());
+    rect.h = static_cast<int>(rectangle.getHeight());
+    SDL_SetRenderDrawColor(renderer_, 100, 100, 255, 255);
+    SDL_RenderFillRect(renderer_, &rect);
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+    SDL_RenderDrawRect(renderer_, &rect);
+}
+
 
 void View::drawCircle(const int x, const int y, const int radius) const {
     for (int w = 0; w < radius * 2; w++)

@@ -4,7 +4,7 @@
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
-#include "Utils/Vector3d.hpp"
+#include "../Utils/Object3D/Vector3d.hpp"
 
 
 class Player {
@@ -17,6 +17,7 @@ public:
 private:
     Vector3d _pos;
     double _dir;
+    double _rotationSpeed;
 };
 
 
