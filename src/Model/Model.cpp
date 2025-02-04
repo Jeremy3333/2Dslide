@@ -6,15 +6,15 @@
 #include "Utils/Object3D/Cube.hpp"
 
 Model::Model() {
-    _objects.push_back(std::make_unique<Cube>(Vector3d(0, -10, 0), Vector2d(), 10));
-    _objects.push_back(std::make_unique<Cube>(Vector3d(0, -10, 10), Vector2d(), 10));
-    _objects.push_back(std::make_unique<Cube>(Vector3d(0, -10, -10), Vector2d(), 10));
-    _objects.push_back(std::make_unique<Cube>(Vector3d(10, -10, 0), Vector2d(), 10));
-    _objects.push_back(std::make_unique<Cube>(Vector3d(10, -10, 10), Vector2d(), 10));
-    _objects.push_back(std::make_unique<Cube>(Vector3d(10, -10, -10), Vector2d(), 10));
-    _objects.push_back(std::make_unique<Cube>(Vector3d(-10, -10, 0), Vector2d(), 10));
-    _objects.push_back(std::make_unique<Cube>(Vector3d(-10, -10, 10), Vector2d(), 10));
-    _objects.push_back(std::make_unique<Cube>(Vector3d(-10, -10, -10), Vector2d(), 10));
+    _objects.push_back(std::make_unique<Cube>(Vector3d(0, -1, 0), Vector2d(), 1));
+    _objects.push_back(std::make_unique<Cube>(Vector3d(0, -1, 1), Vector2d(), 1));
+    _objects.push_back(std::make_unique<Cube>(Vector3d(0, -1, -1), Vector2d(), 1));
+    _objects.push_back(std::make_unique<Cube>(Vector3d(1, -1, 0), Vector2d(), 1));
+    _objects.push_back(std::make_unique<Cube>(Vector3d(1, -1, 1), Vector2d(), 1));
+    _objects.push_back(std::make_unique<Cube>(Vector3d(1, -1, -1), Vector2d(), 1));
+    _objects.push_back(std::make_unique<Cube>(Vector3d(-1, -1, 0), Vector2d(), 1));
+    _objects.push_back(std::make_unique<Cube>(Vector3d(-1, -1, 1), Vector2d(), 1));
+    _objects.push_back(std::make_unique<Cube>(Vector3d(-1, -1, -1), Vector2d(), 1));
 }
 
 Vector3d Model::getPlayerPosition() const {

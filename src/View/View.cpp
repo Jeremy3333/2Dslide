@@ -87,7 +87,10 @@ void View::drawCompas(const double dir) const {
     SDL_RenderDrawLine(renderer_, windowWidth_ - 60, 60, static_cast<int>(windowWidth_ - 60 + 50 * cos(dir)), static_cast<int>(60 + 50 * sin(dir)));
 }
 
-void View::drawObject2D(std::unique_ptr<Object2D> object) const {
+void View::drawObject2D(const std::unique_ptr<Object2D> &object) const {
+    if (object == nullptr) {
+        return;
+    }
     if (dynamic_cast<Rectangle*>(object.get())) {
         drawRectangle(*dynamic_cast<Rectangle*>(object.get()));
         return;
@@ -97,10 +100,10 @@ void View::drawObject2D(std::unique_ptr<Object2D> object) const {
 
 void View::drawRectangle(const Rectangle& rectangle) const {
     SDL_Rect rect;
-    rect.x = static_cast<int>(rectangle.getPosition().x) + windowWidth_ / 2;
-    rect.y = static_cast<int>(rectangle.getPosition().y) + windowHeight_ / 2;
-    rect.w = static_cast<int>(rectangle.getWidth());
-    rect.h = static_cast<int>(rectangle.getHeight());
+    rect.x = static_cast<int>(std::floor(rectangle.getPosition().x)) + windowWidth_ / 2;
+    rect.y = static_cast<int>(std::floor(rectangle.getPosition().y)) + windowHeight_ / 2;
+    rect.w = static_cast<int>(std::ceil(rectangle.getWidth()));
+    rect.h = static_cast<int>(std::ceil(rectangle.getHeight()));
     SDL_SetRenderDrawColor(renderer_, 100, 100, 255, 255);
     SDL_RenderFillRect(renderer_, &rect);
     SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);

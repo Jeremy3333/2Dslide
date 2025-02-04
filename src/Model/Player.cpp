@@ -6,7 +6,7 @@
 
 #include "Player.hpp"
 
-Player::Player() : _dir(0), _rotationSpeed(1.5) {}
+Player::Player() :_dir(0), _rotationSpeed(1.5) {}
 
 Vector3d Player::getPosition() const {
     return _pos;

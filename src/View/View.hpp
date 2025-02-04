@@ -35,7 +35,7 @@ private:
 
     void drawCompas(double dir) const;
 
-    void drawObject2D(std::unique_ptr<Object2D> object) const;
+    void drawObject2D(const std::unique_ptr<Object2D> &object) const;
     void drawRectangle(const Rectangle& rectangle) const;
 
     void drawCircle(int x, int y, int radius) const;
