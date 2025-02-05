@@ -23,8 +23,6 @@ private:
     View view_;
     Model model_;
     bool isRunning_;
-
-    double coordinateToDisplay(double coord) const;
 };
 
 

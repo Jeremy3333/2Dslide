@@ -81,10 +81,20 @@ void View::clear() const {
 }
 
 void View::drawCompas(const double dir) const {
-    SDL_SetRenderDrawColor(renderer_, 169, 169, 169, 255);
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
     drawCircle(windowWidth_ - 60, 60, 50);
+    SDL_SetRenderDrawColor(renderer_, 169, 169, 169, 255);
+    drawCircle(windowWidth_ - 60, 60, 48);
     SDL_SetRenderDrawColor(renderer_, 255, 0, 0, 255);
     SDL_RenderDrawLine(renderer_, windowWidth_ - 60, 60, static_cast<int>(windowWidth_ - 60 + 50 * cos(dir)), static_cast<int>(60 + 50 * sin(dir)));
+    SDL_Vertex vertices[4];
+    vertices[0] = {static_cast<float>(windowWidth_ - 60 + 50 * cos(dir)), static_cast<float>(60 + 50 * sin(dir)), {255}};
+    vertices[1] = {static_cast<float>(windowWidth_ - 60 + 10 * cos(dir + M_PI / 2)), static_cast<float>(60 + 10 * sin(dir + M_PI / 2)), {255}};
+    vertices[2] = {static_cast<float>(windowWidth_ - 60 + 10 * cos(dir - M_PI / 2)), static_cast<float>(60 + 10 * sin(dir - M_PI / 2)), {255}};
+    vertices[3] = {static_cast<float>(windowWidth_ - 60 + 15 * cos(dir - M_PI)), static_cast<float>(60 + 15 * sin(dir - M_PI)), {255}};
+    const int indices[] = {0, 1, 2, 1, 2, 3};
+    SDL_RenderGeometry(renderer_, nullptr, vertices, 4, indices, 6);
+    std::cout <<  SDL_GetError() << std::endl;
 }
 
 void View::drawObject2D(const std::unique_ptr<Object2D> &object) const {
@@ -100,10 +110,10 @@ void View::drawObject2D(const std::unique_ptr<Object2D> &object) const {
 
 void View::drawRectangle(const Rectangle& rectangle) const {
     SDL_Rect rect;
-    rect.x = static_cast<int>(std::floor(rectangle.getPosition().x)) + windowWidth_ / 2;
-    rect.y = static_cast<int>(std::floor(rectangle.getPosition().y)) + windowHeight_ / 2;
-    rect.w = static_cast<int>(std::ceil(rectangle.getWidth()));
-    rect.h = static_cast<int>(std::ceil(rectangle.getHeight()));
+    rect.x = static_cast<int>(std::floor(rectangle.getPosition().x * 2)) + windowWidth_ / 2;
+    rect.y = static_cast<int>(std::floor(rectangle.getPosition().y * 2)) + windowHeight_ / 2;
+    rect.w = static_cast<int>(std::ceil(rectangle.getWidth() * 2));
+    rect.h = static_cast<int>(std::ceil(rectangle.getHeight() * 2));
     SDL_SetRenderDrawColor(renderer_, 100, 100, 255, 255);
     SDL_RenderFillRect(renderer_, &rect);
     SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
