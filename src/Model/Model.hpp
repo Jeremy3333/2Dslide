@@ -5,11 +5,10 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include <memory>
 #include <vector>
 
 #include "Player.hpp"
-#include "Utils/Object3D/Object3D.hpp"
+#include "Utils/GenericObject/Generic3DObject.hpp"
 
 class Model {
 public:
@@ -18,13 +17,13 @@ public:
     [[nodiscard]] Vector3d getPlayerPosition() const;
     [[nodiscard]] double getPlayerDirection() const;
 
-    [[nodiscard]] const std::vector<std::unique_ptr<Object3D>>& getObjects() const;
+    [[nodiscard]] const std::vector<Generic3DObject>& getObjects() const;
 
     void rotatePlayer(double delta);
 
 private:
     Player _player;
-    std::vector<std::unique_ptr<Object3D>> _objects;
+    std::vector<Generic3DObject> _objects;
 };
 
 

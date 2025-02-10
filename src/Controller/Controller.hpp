@@ -16,7 +16,7 @@ public:
 
     [[nodiscard]] Vector3d getPlayerPosition() const;
     [[nodiscard]] double getPlayerDirection() const;
-    [[nodiscard]] const std::vector<std::unique_ptr<Object3D>>& getObjects() const;
+    [[nodiscard]] const std::vector<Generic3DObject>& getObjects() const;
 
     void rotatePlayer(double delta);
 private:

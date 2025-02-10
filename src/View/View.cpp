@@ -62,7 +62,7 @@ void View::draw() const {
     const Vector3d playerPos = controller_.getPlayerPosition();
     drawCompas(dir);
     for (const auto& object : controller_.getObjects()) {
-        drawObject2D(object->getCut(dir, Vector2d(playerPos.x, playerPos.z)));
+        drawObject2D(object.getCut(dir, Vector2d(playerPos.x, playerPos.z)));
     }
     SDL_RenderPresent(renderer_);
 }
@@ -97,15 +97,34 @@ void View::drawCompas(const double dir) const {
     std::cout <<  SDL_GetError() << std::endl;
 }
 
-void View::drawObject2D(const std::unique_ptr<Object2D> &object) const {
+void View::drawObject2D(const std::unique_ptr<Generic2Dobject> &object) const {
     if (object == nullptr) {
         return;
     }
-    if (dynamic_cast<Rectangle*>(object.get())) {
-        drawRectangle(*dynamic_cast<Rectangle*>(object.get()));
-        return;
+    std::vector<std::array<int, 3>> triangles;
+    std::vector<Vector2d> vertices;
+    object->getTriangles(vertices, triangles);
+    std::vector<SDL_Vertex> SDLVertices;
+    for (const auto &vertex : vertices) {
+        SDL_Vertex v = {static_cast<float>(vertex.x), static_cast<float>(vertex.y), {255}};
+        SDLVertices.push_back(v);
     }
-    std::cerr << "Unknown object type" << std::endl;
+    const SDL_Vertex *SDLVerticesArray = &SDLVertices[0];
+    const int* index = &triangles[0][0];
+    const std::vector<Vector2d> Vertices = object->getVertices();
+    SDL_RenderGeometry(renderer_, nullptr, SDLVerticesArray, static_cast<int>(SDLVertices.size()), index, static_cast<int>(triangles.size()));
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+    for (const auto&[fst, snd] : object->getEdges()) {
+        const Vector2d& p1 = Vertices[static_cast<int>(fst)];
+        const Vector2d& p2 = Vertices[static_cast<int>(snd)];
+        SDL_RenderDrawLine(
+            renderer_,
+            static_cast<int>(p1.x),
+            static_cast<int>(p1.y),
+            static_cast<int>(p2.x),
+            static_cast<int>(p2.y)
+            );
+    }
 }
 
 void View::drawRectangle(const Rectangle& rectangle) const {

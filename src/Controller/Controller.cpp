@@ -27,7 +27,7 @@ double Controller::getPlayerDirection() const {
     return model_.getPlayerDirection();
 }
 
-const std::vector<std::unique_ptr<Object3D>>& Controller::getObjects() const{
+const std::vector<Generic3DObject>& Controller::getObjects() const{
     return model_.getObjects();
 }
 
